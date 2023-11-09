@@ -1,0 +1,69 @@
+version: "3.9"
+services:
+  master-node:
+    image: redislabs/redis:latest
+    cap_add:
+      - SYS_RESOURCE
+    ports:
+      - "12000:12000"
+      - "9443:9443"
+      - "8443:8443"
+    environment:
+      - RE_USERNAME=test@test.com
+      - RE_PASS=12345
+      - RE_CLUSTER_NAME=test
+    volumes:
+      - "$PWD/setup_cluster.sh:/opt/setup_cluster.sh"
+      - "$PWD/create_db.sh:/opt/create_db.sh"
+    networks:
+      cluster:
+        ipv4_address: 172.28.5.2
+
+  node-1:
+    image: redislabs/redis:latest
+    cap_add:
+      - SYS_RESOURCE
+    depends_on:
+      - master-node
+    ports:
+      - "12001:12000"
+      - "9444:9443"
+      - "8444:8443"
+    environment:
+      - RE_USERNAME=test@test.com
+      - RE_PASS=12345
+      - RE_CLUSTER_NAME=test
+    volumes:
+      - "$PWD/join_node.sh:/opt/join_node.sh"
+    networks:
+      cluster:
+        ipv4_address: 172.28.5.3
+
+  node-2:
+    image: redislabs/redis:latest
+    cap_add:
+      - SYS_RESOURCE
+    depends_on:
+      - node-1
+    ports:
+      - "12002:12000"
+      - "9445:9443"
+      - "8445:8443"
+    environment:
+      - RE_USERNAME=test@test.com
+      - RE_PASS=12345
+      - RE_CLUSTER_NAME=test
+    volumes:
+      - "$PWD/join_node.sh:/opt/join_node.sh"
+    networks:
+      cluster:
+        ipv4_address: 172.28.5.4
+
+networks:
+  cluster:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.28.0.0/16
+          ip_range: 172.28.5.0/24
+          gateway: 172.28.5.254
