@@ -1,5 +1,9 @@
 #!/bin/bash
 
+if [[ -n "${DOCKER_ACCESS_TOKEN}" ]]; then
+  echo $DOCKER_ACCESS_TOKEN | docker login --username=$DOCKER_USERNAME --password-stdin
+fi
+
 ## Build infrastructure ##
 docker-compose up -d
 sleep 10
@@ -12,4 +16,4 @@ docker-compose exec node-1 "/opt/join_node.sh"
 docker-compose exec node-2 "/opt/join_node.sh"
 
 ## Create DB ##
-docker-compose exec -e OSS_CLUSTER=$1 master-node "/opt/create_db.sh"
+docker-compose exec master-node "/opt/create_db.sh"

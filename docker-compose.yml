@@ -1,17 +1,21 @@
 version: "3.9"
 services:
   master-node:
-    image: redislabs/redis:latest
+    image: "${IMAGE}"
     cap_add:
       - SYS_RESOURCE
     ports:
       - "12000:12000"
       - "9443:9443"
       - "8443:8443"
+      - "6379:6379"
+      - "6372:6378"
     environment:
-      - RE_USERNAME=test@test.com
-      - RE_PASS=12345
-      - RE_CLUSTER_NAME=test
+      - RE_USERNAME=${RE_USERNAME}
+      - RE_PASS=${RE_PASS}
+      - RE_CLUSTER_NAME=${RE_CLUSTER_NAME}
+      - DB_PORT=${DB_PORT}
+      - OSS_CLUSTER=${OSS_CLUSTER}
     volumes:
       - "$PWD/setup_cluster.sh:/opt/setup_cluster.sh"
       - "$PWD/create_db.sh:/opt/create_db.sh"
@@ -29,10 +33,13 @@ services:
       - "12001:12000"
       - "9444:9443"
       - "8444:8443"
+      - "6373:6378"
     environment:
-      - RE_USERNAME=test@test.com
-      - RE_PASS=12345
-      - RE_CLUSTER_NAME=test
+      - RE_USERNAME=${RE_USERNAME}
+      - RE_PASS=${RE_PASS}
+      - RE_CLUSTER_NAME=${RE_CLUSTER_NAME}
+      - DB_PORT=${DB_PORT}
+      - OSS_CLUSTER=${OSS_CLUSTER}
     volumes:
       - "$PWD/join_node.sh:/opt/join_node.sh"
     networks:
@@ -49,10 +56,13 @@ services:
       - "12002:12000"
       - "9445:9443"
       - "8445:8443"
+      - "6374:6378"
     environment:
-      - RE_USERNAME=test@test.com
-      - RE_PASS=12345
-      - RE_CLUSTER_NAME=test
+      - RE_USERNAME=${RE_USERNAME}
+      - RE_PASS=${RE_PASS}
+      - RE_CLUSTER_NAME=${RE_CLUSTER_NAME}
+      - DB_PORT=${DB_PORT}
+      - OSS_CLUSTER=${OSS_CLUSTER}
     volumes:
       - "$PWD/join_node.sh:/opt/join_node.sh"
     networks:
