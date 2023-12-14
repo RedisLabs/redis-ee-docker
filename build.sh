@@ -9,11 +9,11 @@ docker-compose up -d
 sleep 10
 
 ## Create cluster ##
-docker-compose exec master-node "/opt/setup_cluster.sh"
+docker-compose exec -T master-node "/opt/setup_cluster.sh"
 
 ## Join nodes ##
-docker-compose exec node-1 "/opt/join_node.sh"
-docker-compose exec node-2 "/opt/join_node.sh"
+docker-compose exec -T node-1 "/opt/join_node.sh"
+docker-compose exec -T node-2 "/opt/join_node.sh"
 
 ## Create DB ##
-docker-compose exec master-node "/opt/create_db.sh"
+docker-compose exec -T master-node "/opt/create_db.sh"
