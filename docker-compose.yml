@@ -24,7 +24,7 @@ services:
         ipv4_address: 172.28.5.2
 
   node-1:
-    image: redislabs/redis:latest
+    image: "${IMAGE}"
     cap_add:
       - SYS_RESOURCE
     depends_on:
@@ -47,7 +47,7 @@ services:
         ipv4_address: 172.28.5.3
 
   node-2:
-    image: redislabs/redis:latest
+    image: "${IMAGE}"
     cap_add:
       - SYS_RESOURCE
     depends_on:
