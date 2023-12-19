@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [[ -n "${DOCKER_ACCESS_TOKEN}" ]]; then
+if [[ -z "${DOCKER_ACCESS_TOKEN}" ]]; then
   echo $DOCKER_ACCESS_TOKEN | docker login --username=$DOCKER_USERNAME --password-stdin
 fi
 
