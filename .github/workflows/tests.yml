@@ -1,0 +1,46 @@
+name: Tests
+
+on:
+  push:
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+
+  build_cluster:
+    name: Redis EE (${{ matrix.type }})
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        type:
+          - dmc
+          - oss
+
+    steps:
+
+      - name: Install Docker-compose
+        run: |
+          DOCKER_CONFIG=${DOCKER_CONFIG:-$HOME/.docker}
+          mkdir -p $DOCKER_CONFIG/cli-plugins
+          curl -SL https://github.com/docker/compose/releases/download/v2.23.3/docker-compose-linux-x86_64 -o $DOCKER_CONFIG/cli-plugins/docker-compose
+
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Build cluster
+        env:
+          IMAGE: redislabs/redis:latest
+          RE_USERNAME: test@test.com
+          RE_PASS: 12345
+          RE_CLUSTER_NAME: test
+          OSS_CLUSTER: ${{ matrix.type == 'oss' && true || false }}
+          DB_PORT: ${{ matrix.type == 'oss' && 6378 || 6379 }}
+        run: ./build.sh
+
+      - name: Run PING command
+        run: docker-compose exec bash -c "/opt/redislabs/bin/redis-cli ping"
