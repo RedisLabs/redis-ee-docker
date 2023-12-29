@@ -45,4 +45,6 @@ jobs:
         run: ./build.sh
 
       - name: Run PING command
-        run: docker-compose exec -T master-node bash -c "/opt/redislabs/bin/redis-cli ping"
+        run: |
+          sleep 5
+          docker-compose exec -T master-node bash -c "/opt/redislabs/bin/redis-cli -p ${{ env.DB_PORT }} ping"
