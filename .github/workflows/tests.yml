@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - '[0-9].[0-9]'
   pull_request:
 
 concurrency:
@@ -20,17 +21,10 @@ jobs:
       fail-fast: false
       matrix:
         type:
-          - dmc
-          - oss
+          - proxy
+          - oss-cluster
 
     steps:
-
-      - name: Install Docker-compose
-        run: |
-          DOCKER_CONFIG=${DOCKER_CONFIG:-$HOME/.docker}
-          mkdir -p $DOCKER_CONFIG/cli-plugins
-          curl -SL https://github.com/docker/compose/releases/download/v2.23.3/docker-compose-linux-x86_64 -o $DOCKER_CONFIG/cli-plugins/docker-compose
-
       - name: Checkout repository
         uses: actions/checkout@v3
 
@@ -40,14 +34,14 @@ jobs:
           RE_USERNAME: test@test.com
           RE_PASS: 12345
           RE_CLUSTER_NAME: test
-          OSS_CLUSTER: ${{ matrix.type == 'oss' && true || false }}
-          DB_PORT: ${{ matrix.type == 'oss' && 6378 || 6379 }}
+          OSS_CLUSTER: ${{ matrix.type == 'oss-cluster' && true || false }}
+          DB_PORT: ${{ matrix.type == 'oss-cluster' && 6378 || 6379 }}
         run: | 
           ./build.sh
           sleep 5
 
       - name: Run PING command
         env:
-          DB_PORT: ${{ matrix.type == 'oss' && 6378 || 6379 }}
+          DB_PORT: ${{ matrix.type == 'oss-cluster' && 6378 || 6379 }}
         run: |
           docker-compose exec -T master-node bash -c "/opt/redislabs/bin/redis-cli -p ${{ env.DB_PORT }} ping"
