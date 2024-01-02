@@ -1,0 +1,44 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - main
+      - '[0-9].[0-9]'
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+
+  build_cluster:
+    name: Redis EE (${{ matrix.type }})
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        type:
+          - proxy
+          - oss_cluster
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Load dotnenv for CI
+        uses: xom9ikk/dotenv@v2
+        with:
+          path: .github/workflows/modes
+          mode: ${{ matrix.type }}
+
+      - name: Build cluster
+        run: | 
+          ./build.sh
+          sleep 5
+
+      - name: Run PING command
+        run: |
+          docker-compose exec -T master-node bash -c "/opt/redislabs/bin/redis-cli -p ${{ env.DB_PORT }} ping"
