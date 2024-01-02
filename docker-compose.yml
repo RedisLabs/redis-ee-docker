@@ -14,8 +14,8 @@ services:
       - RE_USERNAME=${RE_USERNAME}
       - RE_PASS=${RE_PASS}
       - RE_CLUSTER_NAME=${RE_CLUSTER_NAME}
-      - DB_PORT=${DB_PORT}
-      - OSS_CLUSTER=${OSS_CLUSTER}
+      - RE_DB_PORT=${RE_DB_PORT}
+      - RE_USE_RE_USE_OSS_CLUSTER=${RE_USE_RE_USE_OSS_CLUSTER}
     volumes:
       - "$PWD/setup_cluster.sh:/opt/setup_cluster.sh"
       - "$PWD/create_db.sh:/opt/create_db.sh"
@@ -38,8 +38,8 @@ services:
       - RE_USERNAME=${RE_USERNAME}
       - RE_PASS=${RE_PASS}
       - RE_CLUSTER_NAME=${RE_CLUSTER_NAME}
-      - DB_PORT=${DB_PORT}
-      - OSS_CLUSTER=${OSS_CLUSTER}
+      - RE_DB_PORT=${RE_DB_PORT}
+      - RE_USE_RE_USE_OSS_CLUSTER=${RE_USE_RE_USE_OSS_CLUSTER}
     volumes:
       - "$PWD/join_node.sh:/opt/join_node.sh"
     networks:
@@ -61,8 +61,8 @@ services:
       - RE_USERNAME=${RE_USERNAME}
       - RE_PASS=${RE_PASS}
       - RE_CLUSTER_NAME=${RE_CLUSTER_NAME}
-      - DB_PORT=${DB_PORT}
-      - OSS_CLUSTER=${OSS_CLUSTER}
+      - RE_DB_PORT=${RE_DB_PORT}
+      - RE_USE_RE_USE_OSS_CLUSTER=${RE_USE_RE_USE_OSS_CLUSTER}
     volumes:
       - "$PWD/join_node.sh:/opt/join_node.sh"
     networks:

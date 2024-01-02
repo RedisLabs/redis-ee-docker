@@ -17,7 +17,7 @@ export $(cat .env.credentials | xargs)
 
 ### Build RE cluster ###
 By default, RE cluster supports single endpoint and relies on DMC proxy to calculate hash slot.
-Multiple endpoints (OSS cluster mode) could be enabled by setting env variable `OSS_CLUSTER=true`.
+Multiple endpoints (OSS cluster mode) could be enabled by setting env variable `RE_USE_RE_USE_OSS_CLUSTER=true`.
 
 All standard RE ports available from your local network:
 
