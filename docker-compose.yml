@@ -2,6 +2,7 @@ version: "3.9"
 services:
   master-node:
     image: "${IMAGE}"
+    container_name: "master"
     cap_add:
       - SYS_RESOURCE
     ports:
@@ -25,6 +26,7 @@ services:
 
   node-1:
     image: "${IMAGE}"
+    container_name: "slave-1"
     cap_add:
       - SYS_RESOURCE
     depends_on:
@@ -48,6 +50,7 @@ services:
 
   node-2:
     image: "${IMAGE}"
+    container_name: "slave-2"
     cap_add:
       - SYS_RESOURCE
     depends_on:
