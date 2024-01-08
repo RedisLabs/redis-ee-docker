@@ -1,11 +1,13 @@
 #!/bin/bash
 
+set -e
+
 if [[ -n "${DOCKER_ACCESS_TOKEN}" ]]; then
   echo $DOCKER_ACCESS_TOKEN | docker login --username=$DOCKER_USERNAME --password-stdin
 fi
 
 ## Build infrastructure ##
-docker-compose up -d
+docker-compose up -d --abort-on-container-exit
 sleep 10
 
 ## Create cluster ##
