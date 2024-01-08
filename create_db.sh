@@ -18,4 +18,4 @@ curl -u $RE_USERNAME:$RE_PASS -H "Content-type: application/json" \
                 "proxy_policy": "all-nodes",
                 "shards_placement": "sparse",
                 "shard_key_regex": [{"regex": ".*\\{(?<tag>.*)\\}.*"},{"regex": "(?<tag>.*)"}]}' \
-             -k -X POST https://localhost:9443/v1/bdbs
+             -k -X POST -f https://localhost:9443/v1/bdbs

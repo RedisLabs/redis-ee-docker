@@ -41,5 +41,5 @@ jobs:
 
       - name: Run PING command
         run: |
-          docker-compose exec -T master-node bash -c "/opt/redislabs/bin/redis-cli -p ${{ env.RE_DB_PORT }} ping"
-          docker-compose exec -T master-node bash -c "/opt/redislabs/bin/rladmin status modules"
+          docker exec master bash -c "/opt/redislabs/bin/redis-cli -p ${{ env.RE_DB_PORT }} ping"
+          docker exec master bash -c "/opt/redislabs/bin/rladmin status modules"
