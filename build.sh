@@ -6,7 +6,7 @@ fi
 
 ## Build infrastructure ##
 docker-compose up -d
-sleep 10
+sleep 15
 
 ## Create cluster ##
 docker-compose exec -T master-node "/opt/setup_cluster.sh"
