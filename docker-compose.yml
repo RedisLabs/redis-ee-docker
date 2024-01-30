@@ -5,6 +5,11 @@ services:
     container_name: "master"
     cap_add:
       - SYS_RESOURCE
+    healthcheck:
+      test: ["CMD", "curl", "-k", "https://localhost:9443"]
+      interval: 5s
+      timeout: 2s
+      retries: 3
     ports:
       - "12000:12000"
       - "9443:9443"
@@ -30,7 +35,13 @@ services:
     cap_add:
       - SYS_RESOURCE
     depends_on:
-      - master-node
+      master-node:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-k", "https://localhost:9443"]
+      interval: 5s
+      timeout: 2s
+      retries: 3
     ports:
       - "12001:12000"
       - "9444:9443"
@@ -54,7 +65,13 @@ services:
     cap_add:
       - SYS_RESOURCE
     depends_on:
-      - node-1
+      node-1:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-k", "https://localhost:9443"]
+      interval: 5s
+      timeout: 2s
+      retries: 3
     ports:
       - "12002:12000"
       - "9445:9443"
