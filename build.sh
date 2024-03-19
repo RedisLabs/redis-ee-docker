@@ -1,4 +1,5 @@
 #!/bin/bash
+export DOCKER_DEFAULT_PLATFORM=linux/amd64
 
 if [[ -n "${DOCKER_ACCESS_TOKEN}" ]]; then
   echo $DOCKER_ACCESS_TOKEN | docker login --username=$DOCKER_USERNAME --password-stdin
