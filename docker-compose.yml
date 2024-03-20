@@ -3,6 +3,7 @@ services:
   master-node:
     image: "${IMAGE}"
     container_name: "master"
+    platform: linux/amd64
     cap_add:
       - SYS_RESOURCE
     healthcheck:
@@ -32,6 +33,7 @@ services:
   node-1:
     image: "${IMAGE}"
     container_name: "slave-1"
+    platform: linux/amd64
     cap_add:
       - SYS_RESOURCE
     depends_on:
@@ -62,6 +64,7 @@ services:
   node-2:
     image: "${IMAGE}"
     container_name: "slave-2"
+    platform: linux/amd64
     cap_add:
       - SYS_RESOURCE
     depends_on:
