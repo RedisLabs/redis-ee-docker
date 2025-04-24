@@ -16,6 +16,12 @@ export $(cat .env.credentials | xargs)
 ```
 
 ### Build RE cluster ###
+
+```shell
+./build.sh
+```
+It will create the 3 nodes, have the two nodes joining the master node and create the DB
+
 By default, RE cluster supports single endpoint and relies on DMC proxy to calculate hash slot.
 Multiple endpoints (OSS cluster mode) could be enabled by setting env variable `RE_USE_OSS_CLUSTER=true`.
 
