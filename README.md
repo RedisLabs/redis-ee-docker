@@ -32,3 +32,6 @@ In DMC mode only 12000 port is available, with OSS Cluster API you can connect t
 - `6372-6374, 6379` - Additional ports accessible from local network.
 - `9443 - 9445` - REST  API connections
 - `8443 - 8445` - RE Cluster management UI's 
+
+Web UI : 
+https://localhost:8443

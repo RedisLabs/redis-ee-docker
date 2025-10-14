@@ -1,5 +1,7 @@
 #!/bin/bash
 
+docker compose down --rmi all --volumes --remove-orphans
+
 # Récupère tous les ports locaux (ceux avant le ':') dans le fichier
 ports=$(grep -E '^[[:space:]]+- "[0-9]+:[0-9]+"' docker-compose.yml | sed -E 's/.*"([0-9]+):[0-9]+".*/\1/')
 
@@ -27,8 +29,12 @@ if [[ -n "${DOCKER_ACCESS_TOKEN}" ]]; then
   echo $DOCKER_ACCESS_TOKEN | docker login --username=$DOCKER_USERNAME --password-stdin
 fi
 
+
+
+docker compose pull
+
 ## Build infrastructure ##
-docker compose up -d
+docker compose up -d --force-recreate --renew-anon-volumes
 
 ## Create cluster ##
 docker compose exec -T master-node "/opt/setup_cluster.sh"
