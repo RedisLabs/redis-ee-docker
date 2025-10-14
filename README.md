@@ -16,6 +16,12 @@ export $(cat .env.credentials | xargs)
 ```
 
 ### Build RE cluster ###
+
+```shell
+./build.sh
+```
+It will create the 3 nodes, have the two nodes joining the master node and create the DB
+
 By default, RE cluster supports single endpoint and relies on DMC proxy to calculate hash slot.
 Multiple endpoints (OSS cluster mode) could be enabled by setting env variable `RE_USE_OSS_CLUSTER=true`.
 
@@ -26,3 +32,6 @@ In DMC mode only 12000 port is available, with OSS Cluster API you can connect t
 - `6372-6374, 6379` - Additional ports accessible from local network.
 - `9443 - 9445` - REST  API connections
 - `8443 - 8445` - RE Cluster management UI's 
+
+Web UI : 
+https://localhost:8443
